@@ -1,4 +1,4 @@
-// hard code Employee Name, Role, Start Date, Monthly Rate
+// hard code train Name, Role, Start Date, Monthly Rate
 // type Months Worked
 // calculate Total Billed ($)
 
@@ -29,25 +29,21 @@ var database = firebase.database();
 // --------------------------------------------------------------
 // On submit button click function
 
-$("#employee-submit").on("click", function () {
+$("#train-submit").on("click", function () {
     event.preventDefault();
 
-    var employeeName = $("#employee-name").val().trim();
-    var employeeRole = $("#employee-role").val().trim();
-    var employeeStartDate = moment($("#employee-startdate").val().trimt()).format('l');
-    var employeeMonthlyRate = $("#employee-monthlyrate").val().trim();
+    var trainName = $("#train-name").val().trim();
+    var trainDestination = $("#train-destination").val().trim();
+    var trainFrequency = $("#train-frequency").val().trim();
+    
+    // var trainArrival;
+    // var trainMinutesAway;
 
-    var monthsWorked = moment().diff(employeeStartDate, 'months');
-    var totalBilled = employeeMonthlyRate * monthsWorked; 
-
-    // Save the new employee information in Firebase
+    // Save the new train information in Firebase
     database.ref().push({
-        employeeName: employeeName,
-        employeeRole: employeeRole,
-        employeeStartDate: employeeStartDate,
-        employeeMonthsWorked: monthsWorked,
-        employeeMonthlyRate: employeeMonthlyRate,
-        employeeTotalBilled: totalBilled
+        trainName: trainName,
+        trainDestination: trainDestination,
+        trainFrequency: trainFrequency
     });
 
     $("input").val("");
@@ -59,7 +55,11 @@ $("#employee-submit").on("click", function () {
 
 database.ref().on("child_added", function (childSnapshot) {
 
-    $("tbody").append("<tr>" + "<th scope='col'> " + childSnapshot.val().employeeName + "<td scope='col'>" + childSnapshot.val().employeeRole + "<td scope='col'>" + childSnapshot.val().employeeStartDate + "<td scope='col'>" + childSnapshot.val().employeeMonthsWorked + " month(s)" + "<td scope='col'>" + childSnapshot.val().employeeMonthlyRate + "<td scope='col'>$ " + childSnapshot.val().employeeTotalBilled)
+    $("tbody").append("<tr>" + "<th scope='col'> " + childSnapshot.val().trainName + 
+    "<td scope='col'>" + childSnapshot.val().trainDestination + 
+    "<td scope='col'>" + childSnapshot.val().trainFrequency +
+    "<td scope='col'>" + childSnapshot.val().trainArrival +
+    "<td scope='col'>" + childSnapshot.val().trainMinutesAway);
 
     // If any errors are experienced, log them to console.
 }, function (errorObject) {

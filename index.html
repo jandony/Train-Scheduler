@@ -20,7 +20,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url('https://images.unsplash.com/photo-1495313196544-7d1adf4e628f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3302&q=80'); background-size:cover;">
     <div class="container">
 
         <div class="jumbotron jumbotron-fluid bg-dark text-white">
@@ -32,17 +32,16 @@
         </div>
 
         <div class="card mt-3">
-            <div class="card-header">Current Employees</div>
-            <div id="employee-list" class="card-body">
+            <div class="card-header">Current Train Schedule</div>
+            <div id="train-list" class="card-body">
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Months Worked</th>
-                            <th scope="col">Montly Rate ($)</th>
-                            <th scope="col">Total Billed ($)</th>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Frequency (min)</th>
+                            <th scope="col">Next Arrival</th>
+                            <th scope="col">Minutes Away</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,30 +51,30 @@
         </div>
 
         <div class="card mt-4 mb-5">
-            <div class="card-header">Add Employee</div>
+            <div class="card-header">Add Train</div>
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="name">Employee Name</label>
-                        <input type="name" class="form-control" id="employee-name" placeholder="Jane Doe">
+                        <label for="name">Train Name</label>
+                        <input type="name" class="form-control" id="train-name">
                     </div>
 
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <input type="role" class="form-control" id="employee-role" placeholder="CEO">
+                        <label for="destination">Destination</label>
+                        <input type="destination" class="form-control" id="train-destination">
                     </div>
 
                     <div class="form-group">
-                        <label for="date">Start Date</label>
-                        <input type="date" class="form-control" id="employee-startdate" placeholder="01/01/0101">
+                        <label for="time">First Train Time (HH:mm - military time)</label>
+                        <input type="time" class="form-control" id="train-time">
                     </div>
 
                     <div class="form-group">
-                        <label for="rate">Monthly Rate</label>
-                        <input type="number" class="form-control" id="employee-monthlyrate" placeholder="20000">
+                        <label for="frequency">Frequency (min)</label>
+                        <input type="frequency" class="form-control" id="train-frequency">
                     </div>
 
-                    <button id="employee-submit" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="train-submit" type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
