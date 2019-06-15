@@ -34,16 +34,31 @@ $("#train-submit").on("click", function () {
 
     var trainName = $("#train-name").val().trim();
     var trainDestination = $("#train-destination").val().trim();
+    var trainFirstTime = $("#train-firsttime").val().trim();
     var trainFrequency = $("#train-frequency").val().trim();
     
-    // var trainArrival;
-    // var trainMinutesAway;
+    
+    // converting First Train Time to happen 1 year in the past
+    var firstTimeConverted = moment(trainFirstTime, "HH:mm").subtract(1, "years");
+    // setting a variable for the difference between current time and the time in the past
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    // setting the remaining time in a variable
+    var tRemainder = diffTime % trainFrequency;
+    
+    var minTilTrain = trainFrequency - tRemainder;
+
+    var trainMinutesAway = $("#minAway").text(moment(minTilTrain).format("hh:mm"));
+    var trainArrival = $("#nextTrain").text(moment().add(minTilTrain, "minutes"));
+
+
 
     // Save the new train information in Firebase
     database.ref().push({
         trainName: trainName,
         trainDestination: trainDestination,
-        trainFrequency: trainFrequency
+        trainFrequency: trainFrequency,
+        trainMinutesAway: trainMinutesAway,
+        trainArrival: trainArrival
     });
 
     $("input").val("");
@@ -58,8 +73,8 @@ database.ref().on("child_added", function (childSnapshot) {
     $("tbody").append("<tr>" + "<th scope='col'> " + childSnapshot.val().trainName + 
     "<td scope='col'>" + childSnapshot.val().trainDestination + 
     "<td scope='col'>" + childSnapshot.val().trainFrequency +
-    "<td scope='col'>" + childSnapshot.val().trainArrival +
-    "<td scope='col'>" + childSnapshot.val().trainMinutesAway);
+    "<td scope='col' id='nextTrain' >" + childSnapshot.val().trainArrival +
+    "<td scope='col' id='minAway' >" + childSnapshot.val().trainMinutesAway);
 
     // If any errors are experienced, log them to console.
 }, function (errorObject) {
