@@ -50,8 +50,7 @@ $("#train-submit").on("click", function () {
     var minTilTrain = trainFrequency - tRemainder;
     console.log("minTilTrain: " + minTilTrain);
     
-    var trainMinutesAway = minTilTrain;
-    var trainArrival = moment().add(minTilTrain, 'mm').format("HH:mm");
+    var trainArrival = moment().add(minTilTrain, 'm').format("HH:mm" + " A");
     console.log("trainArrival " + trainArrival);
 
     // Save the new train information in Firebase
@@ -59,7 +58,7 @@ $("#train-submit").on("click", function () {
         name: trainName,
         destination: trainDestination,
         frequency: trainFrequency,
-        minutesAway: trainMinutesAway,
+        minutesAway: minTilTrain,
         arrival: trainArrival
     });
 
@@ -76,7 +75,7 @@ database.ref().on("child_added", function (childSnapshot) {
         "<td scope='col'>" + childSnapshot.val().destination +
         "<td scope='col'>" + childSnapshot.val().frequency +
         "<td scope='col'>" + childSnapshot.val().arrival +
-        "<td scope='col'>" + childSnapshot.val().minutesAway);
+        "<td scope='col'>" + childSnapshot.val().minutesAway + " min");
 
     // If any errors are experienced, log them to console.
 }, function (errorObject) {
