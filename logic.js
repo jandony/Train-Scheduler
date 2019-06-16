@@ -40,15 +40,19 @@ $("#train-submit").on("click", function () {
     
     // converting First Train Time to happen 1 year in the past
     var firstTimeConverted = moment(trainFirstTime, "HH:mm").subtract(1, "years");
+    console.log("First Time Converted: " + firstTimeConverted);
     // setting a variable for the difference between current time and the time in the past
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("diffTime: " + diffTime);
     // setting the remaining time in a variable
     var tRemainder = diffTime % trainFrequency;
+    console.log("tRemainder: " + tRemainder);
     var minTilTrain = trainFrequency - tRemainder;
+    console.log("minTilTrain: " + minTilTrain);
     
-    var trainMinutesAway = $("#minAway").text(minTilTrain);
-    var trainArrival = moment().add(minTilTrain, "minutes");
-    // console.log(moment(trainArrival).format("hh:mm"));
+    var trainMinutesAway = minTilTrain;
+    var trainArrival = moment().add(minTilTrain, 'mm').format("HH:mm");
+    console.log("trainArrival " + trainArrival);
 
     // Save the new train information in Firebase
     database.ref().push({
@@ -56,7 +60,7 @@ $("#train-submit").on("click", function () {
         destination: trainDestination,
         frequency: trainFrequency,
         minutesAway: trainMinutesAway,
-        arrival: 1000
+        arrival: trainArrival
     });
 
     $("input").val("");
